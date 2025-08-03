@@ -10,7 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
   rules:
-  - host: your-domain.com 
+  - host: mayabarksandbytes.local 
     http:
       paths:
       - path: /
