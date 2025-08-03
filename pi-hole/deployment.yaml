@@ -53,11 +53,6 @@ spec:
             configMapKeyRef:
               name: pihole-config
               key: DNS2
-        - name: DNSMASQ_LISTENING
-          valueFrom:
-            configMapKeyRef:
-              name: pihole-config
-              key: DNSMASQ_LISTENING
         volumeMounts:
         - name: pihole-storage
           mountPath: /etc/pihole
