@@ -52,7 +52,7 @@ spec:
               name: nextcloud-secret
               key: admin-password
         - name: NEXTCLOUD_TRUSTED_DOMAINS
-          value: "localhost"
+          value: "localhost 192.168.100.100"
         volumeMounts:
         - name: nextcloud-storage
           mountPath: /var/www/html
