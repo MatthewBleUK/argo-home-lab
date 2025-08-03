@@ -10,7 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
   rules:
-  - host: mayabarksandbytes.home 
+  - host: nextcloud.home
     http:
       paths:
       - path: /
