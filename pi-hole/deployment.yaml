@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole
+  namespace: pihole
+  labels:
+    app: pihole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      containers:
+      - name: pihole
+        image: pihole/pihole:latest
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 53
+          name: dns-tcp
+          protocol: TCP
+        - containerPort: 53
+          name: dns-udp
+          protocol: UDP
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: pihole-config
+              key: TZ
+        - name: WEBPASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: pihole-config
+              key: WEBPASSWORD
+        - name: DNS1
+          valueFrom:
+            configMapKeyRef:
+              name: pihole-config
+              key: DNS1
+        - name: DNS2
+          valueFrom:
+            configMapKeyRef:
+              name: pihole-config
+              key: DNS2
+        - name: DNSMASQ_LISTENING
+          valueFrom:
+            configMapKeyRef:
+              name: pihole-config
+              key: DNSMASQ_LISTENING
+        volumeMounts:
+        - name: pihole-storage
+          mountPath: /etc/pihole
+          subPath: pihole
+        - name: pihole-storage
+          mountPath: /etc/dnsmasq.d
+          subPath: dnsmasq
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+      volumes:
+      - name: pihole-storage
+        persistentVolumeClaim:
+          claimName: pihole-pvc
