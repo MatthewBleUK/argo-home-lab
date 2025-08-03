@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole
+  namespace: pihole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      containers:
+      - name: pihole
+        image: pihole/pihole:latest
+        ports:
+        - containerPort: 80
+        - containerPort: 53
+        env:
+        - name: TZ
+          value: "Europe/London"
+        - name: WEBPASSWORD
+          value: "admin"
+        volumeMounts:
+        - mountPath: /etc/pihole
+          name: pihole-volume
+      volumes:
+      - name: pihole-volume
+        persistentVolumeClaim:
+          claimName: pihole-pvc
