@@ -29,10 +29,6 @@ spec:
           name: dns-udp
           protocol: UDP
         env:
-        - name: DNSMASQ_LISTENING
-          value: "all"
-        - name: FTLCONF_REPLY_ADDR4
-          value: "192.168.100.100"
         - name: WEB_PORT
           value: "8080"
         - name: TZ

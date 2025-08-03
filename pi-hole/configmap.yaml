@@ -5,7 +5,7 @@ metadata:
   namespace: pihole
 data:
   TZ: "UTC"
-  WEBPASSWORD: "admin"  # Change this or use a secret
+  WEBPASSWORD: "admin"
   DNS1: "1.1.1.1"
   DNS2: "1.0.0.1"
   DNSMASQ_LISTENING: "all"
