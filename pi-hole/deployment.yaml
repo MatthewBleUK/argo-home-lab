@@ -15,7 +15,7 @@ spec:
       labels:
         app: pihole
     spec:
-      hostNetwork: true
+      hostNetwork: false
       containers:
       - name: pihole
         image: pihole/pihole:latest
