@@ -6,10 +6,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path  # CHANGE THIS TO YOUR STORAGE CLASS
+  storageClassName: local-path
   resources:
     requests:
-      storage: 50Gi  # ADJUST SIZE AS NEEDED
+      storage: 128Gi 
 
 ---
 apiVersion: apps/v1
@@ -61,8 +61,8 @@ spec:
             memory: "1Gi"
             cpu: "500m"
           limits:
-            memory: "2Gi"
-            cpu: "2000m"
+            memory: "4Gi"
+            cpu: "4000m"
       volumes:
       - name: nextcloud-storage
         persistentVolumeClaim:
