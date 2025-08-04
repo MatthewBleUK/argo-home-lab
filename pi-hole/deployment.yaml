@@ -28,6 +28,8 @@ spec:
           value: "all"
         - name: PIHOLE_DNS_
           value: "1.1.1.1"
+        - name: WEBPASSWORD
+          value: "admin"
         volumeMounts:
         - mountPath: /etc/pihole
           name: pihole-volume
