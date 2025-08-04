@@ -34,11 +34,13 @@ spec:
           value: "1.1.1.1"
         - name: PIHOLE_DNS_2
           value: "8.8.8.8"
-        - name: WEBPASSWORD
-          value: "admin"
         volumeMounts:
         - mountPath: /etc/pihole
           name: pihole-volume
+        lifecycle:
+          postStart:
+            exec:
+              command: ["sh", "-c", "pihole -a -p admin"]
       volumes:
       - name: pihole-volume
         persistentVolumeClaim:
