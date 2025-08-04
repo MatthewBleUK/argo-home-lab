@@ -28,19 +28,26 @@ spec:
         env:
         - name: TZ
           value: "Europe/Sofia"
-        - name: DNSMASQ_LISTENING
+        - name: FTLCONF_dns_listeningMode
           value: "all"
-        - name: PIHOLE_DNS_1
-          value: "1.1.1.1"
-        - name: PIHOLE_DNS_2
-          value: "8.8.8.8"
+        - name: FTLCONF_dns_upstreams
+          value: "1.1.1.1;8.8.8.8"
+        - name: FTLCONF_webserver_api_password
+          value: "admin"
+        - name: FTLCONF_dns_bogusPriv
+          value: "true"
+        - name: FTLCONF_dns_dnssec
+          value: "true"
         volumeMounts:
         - mountPath: /etc/pihole
           name: pihole-volume
-        lifecycle:
-          postStart:
-            exec:
-              command: ["sh", "-c", "sleep 20 && bash -c 'pihole -a -p admin || true'"]
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - NET_RAW
+            - CHOWN
+            - NET_BIND_SERVICE
       volumes:
       - name: pihole-volume
         persistentVolumeClaim:
