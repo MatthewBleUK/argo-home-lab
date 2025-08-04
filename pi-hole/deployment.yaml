@@ -24,6 +24,10 @@ spec:
         env:
         - name: TZ
           value: "Europe/Sofia"
+        - name: DNSMASQ_LISTENING
+          value: "all"
+        - name: PIHOLE_DNS_
+          value: "1.1.1.1"
         volumeMounts:
         - mountPath: /etc/pihole
           name: pihole-volume
