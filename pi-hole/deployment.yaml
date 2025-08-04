@@ -40,7 +40,7 @@ spec:
         lifecycle:
           postStart:
             exec:
-              command: ["sh", "-c", "sleep 10 && pihole -a -p admin"]
+              command: ["sh", "-c", "sleep 20 && bash -c 'pihole -a -p admin || true'"]
       volumes:
       - name: pihole-volume
         persistentVolumeClaim:
