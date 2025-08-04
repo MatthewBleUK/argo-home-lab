@@ -21,9 +21,7 @@ spec:
         - containerPort: 53
         env:
         - name: TZ
-          value: "Europe/London"
-        - name: WEBPASSWORD
-          value: "admin"
+          value: "Europe/Sofia"
         volumeMounts:
         - mountPath: /etc/pihole
           name: pihole-volume
