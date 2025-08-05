@@ -13,6 +13,10 @@ spec:
       values: |
         secrets-store-csi-driver:
           install: false
+        linux:
+          enabled: true
+        windows:
+          enabled: false
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system
