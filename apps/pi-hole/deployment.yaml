@@ -16,39 +16,42 @@ spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
-      - name: pihole
-        image: pihole/pihole:latest
-        ports:
-        - containerPort: 80
-        - containerPort: 443
-        - containerPort: 53
-          protocol: UDP
-        - containerPort: 53
-          protocol: TCP
-        env:
-        - name: TZ
-          value: "Europe/Sofia"
-        - name: FTLCONF_dns_listeningMode
-          value: "all"
-        - name: FTLCONF_dns_upstreams
-          value: "1.1.1.1;8.8.8.8"
-        - name: FTLCONF_webserver_api_password
-          value: "admin"
-        - name: FTLCONF_dns_bogusPriv
-          value: "true"
-        - name: FTLCONF_dns_dnssec
-          value: "true"
-        volumeMounts:
-        - mountPath: /etc/pihole
-          name: pihole-volume
-        securityContext:
-          capabilities:
-            add:
-            - NET_ADMIN
-            - NET_RAW
-            - CHOWN
-            - NET_BIND_SERVICE
+        - name: pihole
+          image: pihole/pihole:latest
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+            - containerPort: 53
+              protocol: UDP
+            - containerPort: 53
+              protocol: TCP
+          env:
+            - name: TZ
+              value: "Europe/Sofia"
+            - name: FTLCONF_dns_listeningMode
+              value: "all"
+            - name: FTLCONF_dns_upstreams
+              value: "1.1.1.1;8.8.8.8"
+            - name: FTLCONF_webserver_api_password
+              valueFrom:
+                secretKeyRef:
+                  name: pihole-webserver-secret 
+                  key: password
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: /mnt/secrets-store
+              readOnly: true
+            - name: pihole-pvc
+              mountPath: /etc/pihole/
+            - name: pihole-pvc
+              mountPath: /etc/dnsmasq.d/
       volumes:
-      - name: pihole-volume
-        persistentVolumeClaim:
-          claimName: pihole-pvc
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: azure-pihole-secrets
+        - name: pihole-pvc
+          persistentVolumeClaim:
+            claimName: pihole-pvc
