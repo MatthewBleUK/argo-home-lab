@@ -10,13 +10,13 @@ spec:
     chart: csi-secrets-store-provider-azure
     targetRevision: v1.7.1
     helm:
-      values: |
-        secrets-store-csi-driver:
-          install: false
-        linux:
-          enabled: true
-        windows:
-          enabled: false
+      parameters:
+        - name: secrets-store-csi-driver.install
+          value: "false"
+        - name: linux.enabled
+          value: "true"
+        - name: windows.enabled
+          value: "false"
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system
