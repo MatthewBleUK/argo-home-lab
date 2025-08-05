@@ -1,26 +1,48 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: csi-azure-provider
+  name: csi-secrets-store-provider-azure
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://azure.github.io/secrets-store-csi-driver-provider-azure/charts
-    chart: csi-secrets-store-provider-azure
-    targetRevision: v1.7.1
+    repoURL: https://kubernetes-sigs.github.io/secrets-store-csi-driver
+    chart: secrets-store-csi-driver-provider-azure
+    targetRevision: "1.5.0"
     helm:
-      parameters:
-        - name: secrets-store-csi-driver.install
-          value: "false"
-        - name: linux.enabled
-          value: "true"
-        - name: windows.enabled
-          value: "false"
+      releaseName: csi-secrets-store-provider-azure
+      values: |
+        # Custom values for the chart
+        linux:
+          image:
+            repository: mcr.microsoft.com/oss/azure/secrets-store/provider-azure
+            tag: v1.5.0
+          resources:
+            limits:
+              cpu: 50m
+              memory: 100Mi
+            requests:
+              cpu: 50m
+              memory: 100Mi
+        windows:
+          image:
+            repository: mcr.microsoft.com/oss/azure/secrets-store/provider-azure
+            tag: v1.5.0
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system
   syncPolicy:
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
