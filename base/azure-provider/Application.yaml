@@ -6,9 +6,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/MatthewBleUK/argo-home-lab
-    path: azure-provider
-    targetRevision: HEAD
+    repoURL: https://azure.github.io/secrets-store-csi-driver-provider-azure/charts
+    chart: csi-secrets-store-provider-azure
+    targetRevision: v1.7.1
+    helm:
+      values: |
+        secrets-store-csi-driver:
+          install: false
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system
