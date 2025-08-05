@@ -4,6 +4,7 @@ metadata:
   name: csi-azure-provider
   namespace: argocd
 spec:
+  project: default
   source:
     repoURL: https://github.com/MatthewBleUK/argo-home-lab
     path: azure-provider
