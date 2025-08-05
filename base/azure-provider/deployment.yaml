@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: provider-azure
-          image: mcr.microsoft.com/oss/azure/secrets-store/provider-azure:1.4.0
+          image: mcr.microsoft.com/oss/azure/secrets-store/provider-azure:1.3.4
           imagePullPolicy: IfNotPresent
           args:
             - "--provider-logging-format=text"
