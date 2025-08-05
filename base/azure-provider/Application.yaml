@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default  # or your specific project
   source:
-    repoURL: https://azure.github.io/secrets-store-csi-driver-provider-azure
+    repoURL: https://azure.github.io/secrets-store-csi-driver-provider-azure/charts
     chart: csi-secrets-store-provider-azure
     targetRevision: "1.5.3"  # specify your desired version
     helm:
