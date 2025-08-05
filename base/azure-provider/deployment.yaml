@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: csi-secrets-store-provider-azure
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: csi-secrets-store-provider-azure
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: csi-secrets-store-provider-azure
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: csi-secrets-store-provider-azure
+    spec:
+      containers:
+        - name: provider-azure
+          image: mcr.microsoft.com/oss/azure/secrets-store/provider-azure:1.4.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--provider-logging-format=text"
+          env:
+            - name: AZURE_AUTHORITY_HOST
+              value: "https://login.microsoftonline.com/"
+          volumeMounts:
+            - mountPath: /provider
+              name: providervol
+      volumes:
+        - name: providervol
+          emptyDir: {}
