@@ -6,20 +6,20 @@ metadata:
 spec:
   provider: azure
   secretObjects:
-  - secretName: pihole-webserver-secret
-    type: Opaque
-    data:
-    - objectName: pi-hole-webserver-secret
-      key: password
+    - secretName: pihole-webserver-secret
+      type: Opaque
+      data:
+        - key: password
+          objectName: pi-hole-webserver-secret
   parameters:
     usePodIdentity: "false"
     useVMManagedIdentity: "false"
-    clientID: "edcfeeee-ebb1-49d1-b73c-0f102a92a88a"
+    tenantId: "$(secrets-store-creds:tenantid)"
+    clientId: "$(secrets-store-creds:clientid)"
+    clientSecret: "$(secrets-store-creds:clientsecret)"
     keyvaultName: "homelabkv01"
     objects: |
       array:
         - |
           objectName: pi-hole-webserver-secret
           objectType: secret
-    tenantId: "e6796a05-156c-48d1-a1e8-b6a21d6c90be"        
-    
