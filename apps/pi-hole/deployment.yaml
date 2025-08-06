@@ -4,6 +4,10 @@ metadata:
   name: pihole
   namespace: pihole
 spec:
+  strategy:
+    type: Recreate
+  nodeSelector:
+    pihole: "true"
   replicas: 1
   selector:
     matchLabels:
@@ -35,7 +39,7 @@ spec:
             - name: FTLCONF_webserver_api_password
               valueFrom:
                 secretKeyRef:
-                  name: pihole-webserver-secret 
+                  name: pihole-webserver-secret
                   key: password
           volumeMounts:
             - name: secrets-store-inline
