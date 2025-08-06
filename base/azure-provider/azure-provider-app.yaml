@@ -7,11 +7,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/MatthewBleUK/argo-home-lab
-    path: ./base/csi-driver  
+    path: ./base/azure-provider  # Path to your custom Azure provider files
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system
+    namespace: kube-system  # Typically deployed to kube-system
   syncPolicy:
     automated:
       selfHeal: true
