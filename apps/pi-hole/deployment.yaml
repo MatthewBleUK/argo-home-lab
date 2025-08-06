@@ -17,6 +17,7 @@ spec:
       labels:
         app: pihole
     spec:
+      serviceAccountName: pihole-csi  
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
