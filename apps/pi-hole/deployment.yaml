@@ -4,19 +4,18 @@ metadata:
   name: pihole
   namespace: pihole
 spec:
-  strategy:
-    type: Recreate
-  nodeSelector:
-    pihole: "true"
   replicas: 1
   selector:
     matchLabels:
       app: pihole
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: pihole
     spec:
+      serviceAccountName: default  # or your custom SA if you're using one
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:

@@ -10,13 +10,12 @@ spec:
       type: Opaque
       data:
         - key: password
-          objectName: pi-hole-webserver-secret
+          objectName: pi-hole-webserver-secret  
   parameters:
     usePodIdentity: "false"
     useVMManagedIdentity: "false"
-    tenantId: "$(secrets-store-creds:tenantid)"
-    clientId: "$(secrets-store-creds:clientid)"
-    clientSecret: "$(secrets-store-creds:clientsecret)"
+    tenantId: "e6796a05-156c-48d1-a1e8-b6a21d6c90be"
+    clientId: "edcfeeee-ebb1-49d1-b73c-0f102a92a88a"
     keyvaultName: "homelabkv01"
     objects: |
       array:
