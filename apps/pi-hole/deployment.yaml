@@ -39,7 +39,7 @@ spec:
             - name: FTLCONF_webserver_api_password
               valueFrom:
                 secretKeyRef:
-                  name: pihole-webserver-secret
+                  name: pi-hole-webserver-secret
                   key: password
           volumeMounts:
             - name: secrets-store-inline
