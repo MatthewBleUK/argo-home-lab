@@ -56,6 +56,8 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: azure-pihole-secrets
+            nodePublishSecretRef:
+              name: secrets-store-creds
         - name: pihole-pvc
           persistentVolumeClaim:
             claimName: pihole-pvc
