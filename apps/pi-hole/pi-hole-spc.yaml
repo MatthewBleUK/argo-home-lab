@@ -6,7 +6,7 @@ metadata:
 spec:
   provider: azure
   secretObjects:
-    - secretName: pihole-webserver-secret
+    - secretName: pi-hole-webserver-secret
       type: Opaque
       data:
         - key: password
