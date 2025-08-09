@@ -44,21 +44,7 @@ spec:
       name: postgres-storage
     spec:
       accessModes: ["ReadWriteOnce"]
-      storageClassName: local-path  # CHANGE THIS TO YOUR STORAGE CLASS
+      storageClassName: local-path 
       resources:
         requests:
-          storage: 10Gi  # ADJUST SIZE AS NEEDED
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres
-  namespace: nextcloud
-spec:
-  selector:
-    app: postgres
-  ports:
-    - port: 5432
-      targetPort: 5432
-  clusterIP: None
+          storage: 10Gi
