@@ -6,8 +6,8 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: pi-hole
+    app: pihole
   ports:
     - name: http
       port: 80
-      targetPort: 80
+      targetPort: 8081
