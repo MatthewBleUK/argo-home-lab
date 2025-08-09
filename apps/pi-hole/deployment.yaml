@@ -34,12 +34,14 @@ spec:
           env:
             - name: TZ
               value: "Europe/Sofia"
+            - name: FTLCONF_webserver_enabled
+              value: "true"
             - name: FTLCONF_webserver_port
               value: "8081"
             - name: FTLCONF_webserver_tls
-              value: false               
-            - name: FTLCONF_dns_listeningMode
               value: "false"
+            - name: FTLCONF_dns_listeningMode
+              value: "all"
             - name: FTLCONF_dns_upstreams
               value: "1.1.1.1;8.8.8.8"
             - name: FTLCONF_webserver_api_password
