@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx 
   rules:
-    - host: pihole.lan
+    - host: pihole.home
       http:
         paths:
           - path: /
