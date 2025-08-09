@@ -8,6 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
 spec:
+  ingressClassName: nginx 
   rules:
     - host: pihole.lan
       http:
