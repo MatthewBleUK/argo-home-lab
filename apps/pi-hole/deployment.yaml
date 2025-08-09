@@ -34,10 +34,12 @@ spec:
           env:
             - name: TZ
               value: "Europe/Sofia"
-            - name: WEB_PORT
-              value: "8081"               # move web off 80 so ingress can bind 80/443
+            - name: FTLCONF_webserver_port
+              value: "8081"
+            - name: FTLCONF_webserver_tls
+              value: false               
             - name: FTLCONF_dns_listeningMode
-              value: "all"
+              value: "false"
             - name: FTLCONF_dns_upstreams
               value: "1.1.1.1;8.8.8.8"
             - name: FTLCONF_webserver_api_password
