@@ -40,7 +40,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: postgres-password
+                  key: password
             - name: PHP_MEMORY_LIMIT
               value: 512M
           volumeMounts:
