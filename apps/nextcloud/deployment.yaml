@@ -42,7 +42,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: password   # make sure this key exists (see step 1)
+                  key: password 
             - name: PHP_MEMORY_LIMIT
               value: 512M
           volumeMounts:
