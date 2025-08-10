@@ -40,7 +40,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: password
+                  key: postgres-password
             - name: PHP_MEMORY_LIMIT
               value: 512M
           volumeMounts:
@@ -77,6 +77,6 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: azure-nextcloud-secrets
-            nodePublishSecretRef:          # required for Service Principal auth
-              name: secrets-store-creds     # your SP creds secret in the *nextcloud* namespace
+            nodePublishSecretRef:          
+              name: secrets-store-creds  
 
