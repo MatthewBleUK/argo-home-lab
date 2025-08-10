@@ -1,36 +1,37 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: postgres
+  name: nextcloud
   namespace: nextcloud
 spec:
-  serviceName: postgres
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: nextcloud
   template:
     metadata:
       labels:
-        app: postgres
+        app: nextcloud
     spec:
-      securityContext:
-        fsGroup: 999
-      volumes:
-        - name: secrets-store
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: azure-nextcloud-secrets
-            nodePublishSecretRef:
-              name: secrets-store-creds
       containers:
-        - name: postgres
-          image: postgres:15
+        - name: nextcloud
+          image: nextcloud:27-apache
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5432
+            - containerPort: 80
+              name: http
           env:
+            - name: NEXTCLOUD_ADMIN_USER
+              value: admin
+            - name: NEXTCLOUD_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nextcloud-secret
+                  key: admin-password
+            - name: NEXTCLOUD_TRUSTED_DOMAINS
+              value: nextcloud.home
+            - name: POSTGRES_HOST
+              value: postgres
             - name: POSTGRES_DB
               value: nextcloud
             - name: POSTGRES_USER
@@ -40,34 +41,24 @@ spec:
                 secretKeyRef:
                   name: postgres-secret
                   key: password
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
+            - name: PHP_MEMORY_LIMIT
+              value: 512M
           volumeMounts:
-            - name: postgres-storage
-              mountPath: /var/lib/postgresql/data
-            - name: secrets-store
-              mountPath: /mnt/secrets-store
-          resources:
-            requests:
-              memory: "256Mi"
-              cpu: "250m"
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
+            - name: nextcloud-data
+              mountPath: /var/www/html
           readinessProbe:
-            tcpSocket:
-              port: 5432
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            timeoutSeconds: 2
-            failureThreshold: 6
-  volumeClaimTemplates:
-    - metadata:
-        name: postgres-storage
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: local-path
-        resources:
-          requests:
-            storage: 10Gi
-            
+            httpGet:
+              path: /status.php
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /status.php
+              port: 80
+            initialDelaySeconds: 60
+            periodSeconds: 20
+      volumes:
+        - name: nextcloud-data
+          persistentVolumeClaim:
+            claimName: nextcloud-pvc
