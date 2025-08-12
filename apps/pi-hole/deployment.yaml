@@ -48,6 +48,7 @@ spec:
               value: |
                 192.168.100.100 pihole.home
                 192.168.100.100 nextcloud.home
+                192.168.100.100 homepage.home
             - name: FTLCONF_dns_upstreams
               value: "1.1.1.1;8.8.8.8"
             - name: FTLCONF_webserver_api_password
