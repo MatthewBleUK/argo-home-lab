@@ -6,25 +6,21 @@ metadata:
   labels:
     app.kubernetes.io/name: homepage
 data:
-  kubernetes.yaml: |
-    mode: cluster
+  # kubernetes.yaml: |
+  #   mode: cluster
   settings.yaml: ""
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
-    - Developer:
-        - Github:
-            - abbr: GH
-              href: https://github.com/
   services.yaml: |
-    - Cluster Apps:
-        - Argo CD:
+    - Homelab:
+        - ArgoCD:
             href: http://192.168.100.100:30765/
-            description: Homepage is awesome
+            description: ArgoCD
 
         - Pihole:
             href: http://pihole.home/admin/
-            description: Homepage is awesome
+            icon: pi-hole.png
 
         - Nextcloud:
             href: http://nextcloud.home/apps/dashboard/
@@ -59,6 +55,6 @@ data:
         memory: true
         network: default
     - search:
-        provider: duckduckgo
+        provider: google.com
         target: _blank
   docker.yaml: ""
